@@ -5,6 +5,7 @@ from app.tools.schemas import (
     ConceptArgs,
     HoursArgs,
     TaskArgs,
+    Effort,
 )
 
 
@@ -73,4 +74,36 @@ def create_study_task(
     return {
         "created": True,
         "task": item,
+    }
+
+
+
+def calculate_effort(
+    args: Effort,
+) -> dict:
+
+    difficulty_hours = {
+        "facil": 2,
+        "media": 4,
+        "dificil": 6,
+    }
+
+    hours_per_topic = difficulty_hours[
+        args.difficulty
+    ]
+
+    htotal = (
+        args.topics_count * hours_per_topic
+    )
+
+    weeks_needed = (
+        htotal / args.weekly_study_hours
+    )
+
+    return {
+        "title": args.title,
+        "difficulty": args.difficulty,
+        "hours_per_topic": hours_per_topic,
+        "htotal": round(htotal, 2),
+        "weeks_needed": round(weeks_needed, 2),
     }

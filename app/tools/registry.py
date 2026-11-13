@@ -8,12 +8,15 @@ from app.tools.functions import (
     lookup_ai_concept,
     calculate_study_hours,
     create_study_task,
+    calculate_effort,
+
 )
 
 from app.tools.schemas import (
     ConceptArgs,
     HoursArgs,
     TaskArgs,
+    Effort,
 )
 
 
@@ -44,6 +47,18 @@ REGISTRY = {
             "Requiere confirmación explícita."
         ),
     ),
+
+
+    "calculate_effort": (
+    Effort,
+    calculate_effort,
+    True,
+    (
+       "La herramienta calculará una estimación de esfuerzo para completar una actividad formativa según su dificultad, "
+       "cantidad de temas y disponibilidad de estudio."
+        "Requiere confirmación explícita."
+    ),
+),
 }
 
 

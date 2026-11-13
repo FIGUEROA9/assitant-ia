@@ -1,5 +1,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field
+from typing import Literal
+
 
 
 class StrictArgs(BaseModel):
@@ -36,4 +38,28 @@ class TaskArgs(StrictArgs):
     estimated_hours: float = Field(
         gt=0,
         le=40,
+    )
+
+
+class Effort(StrictArgs):
+
+    title: str = Field(
+        min_length=3,
+        max_length=120,
+    )
+
+    topics_count: int = Field(
+        gt=0,
+        le=50,
+    )
+
+    difficulty: Literal[
+        "facil",
+        "media",
+        "dificil",
+    ]
+
+    weekly_study_hours: float = Field(
+        gt=0,
+        le=168,
     )
