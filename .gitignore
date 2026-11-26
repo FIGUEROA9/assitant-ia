@@ -21,3 +21,4 @@ venv/
 
 ai_knowledge_assistant.egg-info/
 ./ai_knowledge_assistant.egg-info
+data/

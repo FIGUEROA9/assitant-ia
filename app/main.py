@@ -9,6 +9,10 @@ from app.api.agent import (
     router as agent_router,
 )
 
+from app.api.conversations import (
+    router as conversations_router
+)
+
 app = FastAPI(
     title="AI Knowledge Assistant",
     description="API educativa con integración LLM",
@@ -17,6 +21,8 @@ app = FastAPI(
 
 app.include_router(chat_router)
 app.include_router(agent_router)
+
+app.include_router(conversations_router)
 
 @app.get("/health")
 async def health():

@@ -12,6 +12,7 @@ dependencies = [
     "fastapi[standard]",
     "pydantic",
     "httpx",
+    "python-dotenv"
 ]
 
 [project.optional-dependencies]

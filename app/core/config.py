@@ -13,6 +13,10 @@ class Settings:
     openrouter_model: str
     openrouter_base_url: str
 
+    max_context_messages: int
+    memory_db_path: str
+
+
 
 def get_settings() -> Settings:
     return Settings(
@@ -26,4 +30,16 @@ def get_settings() -> Settings:
             "OPENROUTER_BASE_URL",
             "https://openrouter.ai/api/v1",
         ),
+
+        memory_db_path=os.getenv(
+            "MEMORY_DB_PATH",
+            "data/conversations.db"
+        ),
+
+        max_context_messages=int(
+            os.getenv(
+                "MAX_CONTEXT_MESSAGES", "8"
+
+            )
+        )
     )

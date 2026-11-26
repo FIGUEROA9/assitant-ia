@@ -50,19 +50,51 @@ class AgentService:
         top_p: float = 1.0,
         max_tokens: int = 300,
         confirm_actions: bool = False,
-        max_steps: int = 3
+        max_steps: int = 3,
+        history: list[dict[str, str]] | None = None,
+        memory_facts: list[dict[str, str]] | None = None
     ) -> AgentResult:
 
         messages: list[dict[str, Any]] = [
             {
                 "role": "system",
                 "content": SYSTEM_PROMPT,
-            },
-            {
-                "role": "user",
-                "content": question,
-            },
+            }
         ]
+
+        if memory_facts:
+            facts = json.dumps(
+                memory_facts,
+                ensure_ascii=False
+            )
+
+            messages.append({
+                "role": "system",
+                "content": f"Datos de memoria: {facts}",
+            })
+
+        for item in history or []:
+
+            if item.get("role") not in (
+                "user",
+                "assistant",
+            ):
+                raise AgentExecutionError(
+                    "Rol de historial inválido"
+                )
+
+            messages.append({
+                "role": item["role"],
+                "content": item["content"],
+            })
+
+        # 4. Incorporar la pregunta actual.
+        messages.append({
+            "role": "user",
+            "content": question,
+        })
+
+        
 
         used: list[str] = []
 
